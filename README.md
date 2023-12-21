@@ -1,2 +1,3 @@
 # DapperCommandBuilder
-Command Builder for Dapper
+Command Builder(not only) for Dapper
+This is command

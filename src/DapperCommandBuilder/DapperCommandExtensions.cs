@@ -19,6 +19,16 @@ namespace DapperCommandBuilder
             return command;
         }
 
+        public static DapperCommand Select(this DapperCommand command, string[] selections)
+        {
+            if (command.Selections == null) command.Selections = new List<string>().ToArray();
+            foreach(string select in selections)
+            {
+                command.Selections.Append(select);
+            }
+            return command;
+        }
+
         public static DapperCommand Select(this DapperCommand command, string tableName, string[] selections)
         {
             command.Type = CommandType.SELECT;
