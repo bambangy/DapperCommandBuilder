@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DapperCommandBuilder
 {
-    public class DapperCommandResult
+    public abstract class DapperCommandResult : IDapperCommandResult
     {
         public string Script { get; set; }
         public Dictionary<string, object?> Parameters { get; set; }
