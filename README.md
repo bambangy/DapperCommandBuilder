@@ -28,7 +28,11 @@ You can construct insert statement and specify sets of column and value to inser
 ```
 DapperCommand.Init().Insert("category", new Dictionary<string, object?>()
 {
-	{ "name", "Karya Ilmiah" }
+{ "name", "Karya Ilmiah" }
 }).Build();
 ```
-
+This will produce raw query
+```
+INSERT INTO category(name) VALUES(@name)
+```
+And the binding parameters will available in `IDapperCommandResult.Parameters` that contains key value pair of `@name` dan `Karya Ilmiah`
