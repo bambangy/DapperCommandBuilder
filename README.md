@@ -5,23 +5,30 @@ Command Builder (not only) for Dapper. This will make querying raw script more c
 None to be prepared
 
 ## How to use
-### Select statement
+### Introduction
+ - You can start querying by call `DapperCommand.Init()`. Then write your query as your needs.
+ - You can use some method to construct your query and at the end call `.Build()`
+ - `.Build()` have return of `IDapperCommandResult`, which have two properties `Script` and `Parameters`
+ - `Script` is raw sql query
+ - `Parameters` is sets of name and value bind parameters to query.
+### SELECT
+ - `Select(string tableName, string[] columns)` used to construct initial statement as select statement with initial columns to select
+ - `Select(string[] columns)` used to add additional field to select within statement
+ 
+Example
 ```
-DapperCommandResult cmd = DapperCommand.Init()
-                .Select("Employee a", new string[] { "a.Name", "a.BirthDate" })
-                .Reference(CommandReference.Add(CommandReferenceType.Join, "Department b", new System.Collections.ObjectModel.Collection<CommandCondition>()
-                {
-                    CommandCondition.Add("b.ID", CommandMatchType.Equal, "a.DepartmentID"),
-                    CommandCondition.Add("b.RowStatus", CommandMatchType.Equal, 0, CommandOperation.And)
-                }))
-                .Where(CommandCondition.Add("a.BirthDate", CommandMatchType.GreaterOrEqual, new DateTime(1992, 01, 01)))
-                .Where(CommandCondition.Add("b.Name", CommandMatchType.Equal, "HR", operation: CommandOperation.And, beginGroup: true))
-                .Where(CommandCondition.Add("b.Name", CommandMatchType.Equal, "IT", operation: CommandOperation.Or, endGroup: true))
-                .Build();
+DapperCommand.Init().Select("category", new string[] { "name", "category_id" }).Build()
 ```
-Then access the script from `cmd.Script`
+This will produce raw query
 ```
-SELECT a.Name, a.BirthDate FROM Employee a  JOIN Department b ON    b.ID = a.DepartmentID   And  b.RowStatus = 0  WHERE    a.BirthDate >= @e8e3274ebcdc40579dbf57ca21f4af2a__a_BirthDate   And ( b.Name = @052f981356164179b3d9ec3befe46b04__b_Name   Or  b.Name = @f7d67afdd86d43f7b13a19f75f3c069a__b_Name )
+SELECT name, category_id FROM category 
 ```
-And access the binding parameters in `cmd.Parameters` as `Dictionary<string, object?>` types.
-Be awae of using `alias` after table name, it must be specified to all properties of it table inside builder.
+### INSERT
+You can construct insert statement and specify sets of column and value to insert to specific table
+```
+DapperCommand.Init().Insert("category", new Dictionary<string, object?>()
+{
+	{ "name", "Karya Ilmiah" }
+}).Build();
+```
+
