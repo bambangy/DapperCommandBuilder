@@ -4,13 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DapperCommandBuilder
+namespace SqlCommandBuilder
 {
-    public enum CommandType
+    public enum CommandOrderDirection
     {
-        SELECT,
-        INSERT,
-        UPDATE,
-        DELETE
+        Asc,
+        Desc
     }
 }

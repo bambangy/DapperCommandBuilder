@@ -3,7 +3,7 @@ using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 
-namespace DapperCommandBuilder.Test
+namespace SqlCommandBuilder.Test
 {
     public class MySqlQueryTesting
     {
@@ -20,7 +20,7 @@ namespace DapperCommandBuilder.Test
         [Test]
         public void TestComposeScript()
         {
-            IDapperCommandResult strCommand = CommandBuilder.Init()
+            IQueryCommandResult strCommand = CommandBuilder.Init()
                 .Select("film_category a", new string[] { "b.title Film_Title", "b.description Film_Description", "c.name Category" })
                 .Join(CommandReferenceType.Join, "film b", new Collection<(CommandOperation operation, string column, CommandMatchType matchType, object? value)>()
                 {
@@ -40,7 +40,7 @@ namespace DapperCommandBuilder.Test
         [Test]
         public void TestQuerySimpleSelect()
         {
-            IDapperCommandResult strCommand = CommandBuilder.Init()
+            IQueryCommandResult strCommand = CommandBuilder.Init()
                 .Select("film", new string[] { })
                 .Build();
 
@@ -53,7 +53,7 @@ namespace DapperCommandBuilder.Test
         [Test]
         public void TestQueryWhere()
         {
-            IDapperCommandResult strCommand = CommandBuilder.Init()
+            IQueryCommandResult strCommand = CommandBuilder.Init()
                 .Select("film", new string[] { })
                 .WhereAnd("rating", CommandMatchType.Equal, "PG")
                 .Build();
@@ -67,7 +67,7 @@ namespace DapperCommandBuilder.Test
         [Test]
         public void TestQueryLimit()
         {
-            IDapperCommandResult strCommand = CommandBuilder.Init()
+            IQueryCommandResult strCommand = CommandBuilder.Init()
                 .SetAdapter(CommandAdapter.Mysql)
                 .Select("film", new string[] { })
                 .Take(5)
@@ -82,7 +82,7 @@ namespace DapperCommandBuilder.Test
         [Test]
         public void TestQueryOrder()
         {
-            IDapperCommandResult strCommand = CommandBuilder.Init()
+            IQueryCommandResult strCommand = CommandBuilder.Init()
                 .Select("film", new string[] { })
                 .Sort("title", CommandOrderDirection.Desc)
                 .Build();
@@ -97,7 +97,7 @@ namespace DapperCommandBuilder.Test
         [Test]
         public void TestInsertUpdateDelete()
         {
-            IDapperCommandResult strCommand = CommandBuilder.Init()
+            IQueryCommandResult strCommand = CommandBuilder.Init()
                 .Insert("category", new Dictionary<string, object?>()
                 {
                     { "name", "Fiksi Ilmiah" }

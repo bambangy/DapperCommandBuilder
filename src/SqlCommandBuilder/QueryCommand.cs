@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DapperCommandBuilder
+namespace SqlCommandBuilder
 {
-    public abstract class DapperCommand : IDapperCommand
+    public abstract class QueryCommand : IQueryCommand
     {
         private CommandAdapter? adapter;
         private CommandType? type;
@@ -23,7 +23,7 @@ namespace DapperCommandBuilder
         private int offset { get; set; }
         private Dictionary<string, object?> bindings { get; set; }
 
-        public DapperCommand()
+        public QueryCommand()
         {
             adapter = null;
             type = null;
@@ -38,20 +38,20 @@ namespace DapperCommandBuilder
             bindings = new Dictionary<string, object?>();
         }
 
-        public IDapperCommand InitDelete(string tableName)
+        public IQueryCommand InitDelete(string tableName)
         {
             this.tableName = tableName;
             this.type = CommandType.DELETE;
             return this;
         }
 
-        public IDapperCommand AddGroupBy(string column)
+        public IQueryCommand AddGroupBy(string column)
         {
             this.groupings.Add(column);
             return this;
         }
 
-        public IDapperCommand InitInsert(string tableName, Dictionary<string, object?> parameters)
+        public IQueryCommand InitInsert(string tableName, Dictionary<string, object?> parameters)
         {
             this.tableName = tableName;
             bindings = parameters;
@@ -59,20 +59,20 @@ namespace DapperCommandBuilder
             return this;
         }
 
-        public IDapperCommand AddReference(CommandReferenceType type, string tableName, ICollection<(CommandOperation operation, string column, CommandMatchType matchType, object? value)> onConditions)
+        public IQueryCommand AddReference(CommandReferenceType type, string tableName, ICollection<(CommandOperation operation, string column, CommandMatchType matchType, object? value)> onConditions)
         {
             Collection<CommandCondition> innerOnCondtions = new Collection<CommandCondition>(onConditions.Select(t => CommandCondition.Add(t.column, t.matchType, t.value, operation: t.operation)).ToList());
             references.Add(CommandReference.Add(type, tableName, innerOnCondtions));
             return this;
         }
 
-        public IDapperCommand AddField(string column)
+        public IQueryCommand AddField(string column)
         {
             selections.Add(column);
             return this;
         }
 
-        public IDapperCommand InitSelect(string tableName, string[] columns)
+        public IQueryCommand InitSelect(string tableName, string[] columns)
         {
             this.tableName = tableName;
             selections = new Collection<string>(columns);
@@ -80,31 +80,31 @@ namespace DapperCommandBuilder
             return this;
         }
 
-        public IDapperCommand SetAdapter(CommandAdapter adapter)
+        public IQueryCommand SetAdapter(CommandAdapter adapter)
         {
             this.adapter = adapter;
             return this;
         }
 
-        public IDapperCommand SetSkip(int offset)
+        public IQueryCommand SetSkip(int offset)
         {
             this.offset = offset;
             return this;
         }
 
-        public IDapperCommand AddSort(string column, CommandOrderDirection direction)
+        public IQueryCommand AddSort(string column, CommandOrderDirection direction)
         {
             sorts.Add(CommandSort.Add(column, direction));
             return this;
         }
 
-        public IDapperCommand SetTake(int limit)
+        public IQueryCommand SetTake(int limit)
         {
             this.limit = limit;
             return this;
         }
 
-        public IDapperCommand InitUpdate(string tableName, Dictionary<string, object?> parameters)
+        public IQueryCommand InitUpdate(string tableName, Dictionary<string, object?> parameters)
         {
             this.tableName = tableName;
             this.bindings = parameters;
@@ -112,13 +112,13 @@ namespace DapperCommandBuilder
             return this;
         }
 
-        public IDapperCommand AddWhereAnd(string column, CommandMatchType matchType, object? value)
+        public IQueryCommand AddWhereAnd(string column, CommandMatchType matchType, object? value)
         {
             this.conditions.Add(CommandCondition.Add(column, matchType, value, operation: CommandOperation.And));
             return this;
         }
 
-        public IDapperCommand AddWhereAndGroup(ICollection<(CommandOperation operation, string column, CommandMatchType matchType, object? value)> conditions)
+        public IQueryCommand AddWhereAndGroup(ICollection<(CommandOperation operation, string column, CommandMatchType matchType, object? value)> conditions)
         {
             for (int i = 0; i < conditions.Count; i++)
             {
@@ -133,13 +133,13 @@ namespace DapperCommandBuilder
             return this;
         }
 
-        public IDapperCommand AddWhereOr(string column, CommandMatchType matchType, object? value)
+        public IQueryCommand AddWhereOr(string column, CommandMatchType matchType, object? value)
         {
             this.conditions.Add(CommandCondition.Add(column, matchType, value, operation: CommandOperation.Or));
             return this;
         }
 
-        public IDapperCommand AddWhereOrGroup(ICollection<(CommandOperation operation, string column, CommandMatchType matchType, object? value)> conditions)
+        public IQueryCommand AddWhereOrGroup(ICollection<(CommandOperation operation, string column, CommandMatchType matchType, object? value)> conditions)
         {
             for (int i = 0; i < conditions.Count; i++)
             {
@@ -154,12 +154,12 @@ namespace DapperCommandBuilder
             return this;
         }
 
-        public IDapperCommandResult BuildCommand()
+        public IQueryCommandResult BuildCommand()
         {
             if (string.IsNullOrEmpty(tableName))
                 throw new NullReferenceException(nameof(tableName));
 
-            IDapperCommandResult result = CommandResultBuilder.Create();
+            IQueryCommandResult result = CommandResultBuilder.Create();
             Dictionary<string, object?> parameters = new Dictionary<string, object?>();
 
             switch (type)

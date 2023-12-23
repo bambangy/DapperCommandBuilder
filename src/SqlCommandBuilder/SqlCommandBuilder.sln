@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DapperCommandBuilder", "DapperCommandBuilder.csproj", "{43DC85B7-781E-4653-A691-76FA53BD772D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlCommandBuilder", "SqlCommandBuilder.csproj", "{43DC85B7-781E-4653-A691-76FA53BD772D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DapperCommandBuilder.Test", "..\DapperCommandBuilder.Test\DapperCommandBuilder.Test.csproj", "{9B5A90BD-B107-4DB0-AA3A-9ABB268B3200}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlCommandBuilder.Test", "..\SqlCommandBuilder.Test\SqlCommandBuilder.Test.csproj", "{9B5A90BD-B107-4DB0-AA3A-9ABB268B3200}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

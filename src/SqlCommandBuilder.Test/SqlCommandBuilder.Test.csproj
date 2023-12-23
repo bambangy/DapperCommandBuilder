@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DapperCommandBuilder\DapperCommandBuilder.csproj" />
+    <ProjectReference Include="..\SqlCommandBuilder\SqlCommandBuilder.csproj" />
   </ItemGroup>
 
 </Project>

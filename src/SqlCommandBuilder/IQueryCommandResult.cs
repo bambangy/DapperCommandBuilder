@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DapperCommandBuilder
+namespace SqlCommandBuilder
 {
-    public interface IDapperCommandResult
+    public interface IQueryCommandResult
     {
         string Script { get; set; }
         Dictionary<string, object?> Parameters { get; set; }

@@ -10,7 +10,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace DapperCommandBuilder
+namespace SqlCommandBuilder
 {
     public static class IDapperCommandExtensions
     {
@@ -20,7 +20,7 @@ namespace DapperCommandBuilder
         /// <param name="command">IDapperCommand</param>
         /// <param name="adapter">CommandAdapter : Type of supported adapter to translate to query</param>
         /// <returns>IDapperCommand</returns>
-        public static IDapperCommand SetAdapter(this IDapperCommand command, CommandAdapter adapter) => command.SetAdapter(adapter);
+        public static IQueryCommand SetAdapter(this IQueryCommand command, CommandAdapter adapter) => command.SetAdapter(adapter);
 
         /// <summary>
         /// Add additional selection fields to query
@@ -28,7 +28,7 @@ namespace DapperCommandBuilder
         /// <param name="command">IDapperCommand</param>
         /// <param name="selections">string[] : Array of fields or columns</param>
         /// <returns>IDapperCommand</returns>
-        public static IDapperCommand Select(this IDapperCommand command, string[] selections)
+        public static IQueryCommand Select(this IQueryCommand command, string[] selections)
         {
             foreach (var selection in selections)
             {
@@ -45,7 +45,7 @@ namespace DapperCommandBuilder
         /// <param name="tableName">string : Table name</param>
         /// <param name="selections">string[] : Array of fields or columns</param>
         /// <returns>IDapperCommand</returns>
-        public static IDapperCommand Select(this IDapperCommand command, string tableName, string[] selections) => command.InitSelect(tableName, selections);
+        public static IQueryCommand Select(this IQueryCommand command, string tableName, string[] selections) => command.InitSelect(tableName, selections);
 
         /// <summary>
         /// Initial insert query statement with specific tablename
@@ -54,7 +54,7 @@ namespace DapperCommandBuilder
         /// <param name="tableName">string : Table name</param>
         /// <param name="parameters">Dictionary<string, object?> : Sets of column name and the value to insert</param>
         /// <returns>IDapperCommand</returns>
-        public static IDapperCommand Insert(this IDapperCommand command, string tableName, Dictionary<string, object?> parameters) => command.InitInsert(tableName, parameters);
+        public static IQueryCommand Insert(this IQueryCommand command, string tableName, Dictionary<string, object?> parameters) => command.InitInsert(tableName, parameters);
 
         /// <summary>
         /// Initial update query statement with specific tablename. !!!Don't forget to add Where() to update specific data!!!
@@ -63,7 +63,7 @@ namespace DapperCommandBuilder
         /// <param name="tableName">string : Table name</param>
         /// <param name="parameters">Dictionary<string, object?> : Sets of column name and the value to update</param>
         /// <returns>IDapperCommand</returns>
-        public static IDapperCommand Update(this IDapperCommand command, string tableName, Dictionary<string, object?> parameters) => command.InitUpdate(tableName, parameters);
+        public static IQueryCommand Update(this IQueryCommand command, string tableName, Dictionary<string, object?> parameters) => command.InitUpdate(tableName, parameters);
 
         /// <summary>
         /// Initial delete query statement with specific tablename. !!!Don't forget to add Where() to update specific data!!!
@@ -71,22 +71,22 @@ namespace DapperCommandBuilder
         /// <param name="command">IDapperCommand</param>
         /// <param name="tableName">string : Table name</param>
         /// <returns>IDapperCommand</returns>
-        public static IDapperCommand Delete(this IDapperCommand command, string tableName) => command.InitDelete(tableName);
+        public static IQueryCommand Delete(this IQueryCommand command, string tableName) => command.InitDelete(tableName);
 
-        public static IDapperCommand WhereAnd(this IDapperCommand command, string column, CommandMatchType matchType, object? value) => command.AddWhereAnd(column, matchType, value);
+        public static IQueryCommand WhereAnd(this IQueryCommand command, string column, CommandMatchType matchType, object? value) => command.AddWhereAnd(column, matchType, value);
 
-        public static IDapperCommand WhereOr(this IDapperCommand command, string column, CommandMatchType matchType, object? value) => command.AddWhereOr(column, matchType, value);
+        public static IQueryCommand WhereOr(this IQueryCommand command, string column, CommandMatchType matchType, object? value) => command.AddWhereOr(column, matchType, value);
 
-        public static IDapperCommand WhereGroupAnd(this IDapperCommand command, ICollection<(CommandOperation operation, string column, CommandMatchType matchType, object? value)> conditions) => command.AddWhereAndGroup(conditions);
+        public static IQueryCommand WhereGroupAnd(this IQueryCommand command, ICollection<(CommandOperation operation, string column, CommandMatchType matchType, object? value)> conditions) => command.AddWhereAndGroup(conditions);
 
-        public static IDapperCommand WhereGroupOr(this IDapperCommand command, ICollection<(CommandOperation operation, string column, CommandMatchType matchType, object? value)> conditions) => command.AddWhereOrGroup(conditions);
+        public static IQueryCommand WhereGroupOr(this IQueryCommand command, ICollection<(CommandOperation operation, string column, CommandMatchType matchType, object? value)> conditions) => command.AddWhereOrGroup(conditions);
 
-        public static IDapperCommand Sort(this IDapperCommand command, string column, CommandOrderDirection direction) => command.AddSort(column, direction);
+        public static IQueryCommand Sort(this IQueryCommand command, string column, CommandOrderDirection direction) => command.AddSort(column, direction);
 
-        public static IDapperCommand Join(this IDapperCommand command, CommandReferenceType type, string tableName, ICollection<(CommandOperation operation, string column, CommandMatchType matchType, object? value)> onConditions) => command.AddReference(type, tableName, onConditions);
+        public static IQueryCommand Join(this IQueryCommand command, CommandReferenceType type, string tableName, ICollection<(CommandOperation operation, string column, CommandMatchType matchType, object? value)> onConditions) => command.AddReference(type, tableName, onConditions);
 
-        public static IDapperCommand Take(this IDapperCommand command, int take, int skip = 0) => command.SetTake(take).SetSkip(skip);
+        public static IQueryCommand Take(this IQueryCommand command, int take, int skip = 0) => command.SetTake(take).SetSkip(skip);
 
-        public static IDapperCommandResult Build(this IDapperCommand command) => command.BuildCommand();
+        public static IQueryCommandResult Build(this IQueryCommand command) => command.BuildCommand();
     }
 }

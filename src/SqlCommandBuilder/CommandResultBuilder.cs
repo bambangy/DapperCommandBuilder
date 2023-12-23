@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DapperCommandBuilder
+namespace SqlCommandBuilder
 {
     public class CommandResultBuilder
     {
-        private class CommandResult : DapperCommandResult
+        private class CommandResult : QueryCommandResult
         {
             public CommandResult()
             {
@@ -16,6 +16,6 @@ namespace DapperCommandBuilder
                 Script = string.Empty;
             }
         }
-        public static IDapperCommandResult Create() => new CommandResult();
+        public static IQueryCommandResult Create() => new CommandResult();
     }
 }

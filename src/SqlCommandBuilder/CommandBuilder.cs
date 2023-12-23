@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DapperCommandBuilder
+namespace SqlCommandBuilder
 {
     public class CommandBuilder
     {
-        private class Command : DapperCommand
+        private class Command : QueryCommand
         {
             public Command()
             {}
         }
 
-        public static IDapperCommand Init() => new Command();
+        public static IQueryCommand Init() => new Command();
     }
 }

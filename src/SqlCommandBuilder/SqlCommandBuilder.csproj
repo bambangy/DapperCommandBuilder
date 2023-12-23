@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Company>Bambang Yudhotomo</Company>
+    <Authors>Bambang Yudhotomo</Authors>
+    <Title>DapperCommandBuilder</Title>
+    <PackageId>DapperCommandBuilder</PackageId>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <Version>1.0.0-alpha</Version>
+    <Description>Command Builder (not only) for Dapper. This will make querying raw script more comfortable. And reduce the mistake in writing a sql command.</Description>
+    <Copyright>MIT</Copyright>
+    <PackageProjectUrl>https://github.com/bambangy/DapperCommandBuilder</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/bambangy/DapperCommandBuilder</RepositoryUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>command builder;query builder;query;command;dapper;sql;sql query;</PackageTags>
+    <PackageOutputPath>..\..\dist</PackageOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>
