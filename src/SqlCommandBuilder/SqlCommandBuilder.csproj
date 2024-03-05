@@ -7,14 +7,14 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Company>Bambang Yudhotomo</Company>
     <Authors>Bambang Yudhotomo</Authors>
-    <Title>DapperCommandBuilder</Title>
-    <PackageId>DapperCommandBuilder</PackageId>
+    <Title>SqlCommandBuilder</Title>
+    <PackageId>SqlCommandBuilder</PackageId>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <Version>1.0.0-alpha</Version>
-    <Description>Command Builder (not only) for Dapper. This will make querying raw script more comfortable. And reduce the mistake in writing a sql command.</Description>
+    <Description>A library for building raw SQL queries more maintainably and with fewer mistakes.</Description>
     <Copyright>MIT</Copyright>
-    <PackageProjectUrl>https://github.com/bambangy/DapperCommandBuilder</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/bambangy/DapperCommandBuilder</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/bambangy/SqlCommandBuilder</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/bambangy/SqlCommandBuilder</RepositoryUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryType>git</RepositoryType>
     <PackageTags>command builder;query builder;query;command;dapper;sql;sql query;</PackageTags>
